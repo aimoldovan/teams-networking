@@ -39,6 +39,15 @@ h2 {
   color: white;
 }
 
+.tbar {
+  display: flex;
+  padding: 0 0 5px 0;
+}
+
+.tfill {
+  flex: 1;
+}
+
 #teamsTable {
   border-collapse: collapse;
   width: 100%;
