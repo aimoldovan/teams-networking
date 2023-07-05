@@ -41,7 +41,8 @@ h2 {
 
 .tbar {
   display: flex;
-  padding: 0 0 5px 0;
+  margin-bottom: 10px;
+  align-items: stretch;
 }
 
 .tfill {
