@@ -83,3 +83,18 @@ footer {
   text-align: center;
   padding: 5px;
 }
+
+.delete-btn,
+.edit-btn {
+  color: #0096d6;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  text-decoration: underline;
+  color: #b90303;
+}
+.edit-btn:hover {
+  text-decoration: underline;
+  color: #039903;
+}
