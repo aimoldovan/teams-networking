@@ -44,8 +44,8 @@ function getTeamAsHTML(team) {
     <td>${team.name}</td>
     <td>${team.url}</td>
     <td>
-    <a data-id="${team.id}" class="edit-btn"> &#9998; </a>
-    <a data-id="${team.id}" class="delete-btn"> ✖ </a>
+    <button data-id="${team.id}" class="action-btn edit-btn"> &#9998; </button>
+    <button data-id="${team.id}" class="action-btn delete-btn"> ✖ </button>
     </td>
   </tr>`;
 }
@@ -65,8 +65,8 @@ function getTeamAsHTMLInputs(team) {
       <input value="${team.url}" type="text" name="url" placeholder="Enter Project URL" />
     </td>
     <td>
-      <button title="Save" type="submit">💾</button>
-      <button title="Cancel" type="reset">❌</button>
+      <button class="action-btn" title="Save" type="submit">💾</button>
+      <button class="action-btn" title="Cancel" type="reset">❌</button>
     </td>
   </tr>`;
 }
@@ -151,7 +151,7 @@ function initEvents() {
   $("#teamsForm").addEventListener("submit", onSubmit);
 
   $("#teamsTable tbody").addEventListener("click", e => {
-    if (e.target.matches("a.delete-btn")) {
+    if (e.target.matches("button.delete-btn")) {
       const id = e.target.dataset.id;
       // console.warn("delete... %o", id);
       deleteTeamRequest(id).then(status => {
@@ -160,7 +160,7 @@ function initEvents() {
           window.location.reload();
         }
       });
-    } else if (e.target.matches("a.edit-btn")) {
+    } else if (e.target.matches("button.edit-btn")) {
       const id = e.target.dataset.id;
       startEdit(id);
     }
