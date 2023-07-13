@@ -86,6 +86,7 @@ td {
 
 .action-btn {
   min-width: 35px;
+  cursor: pointer;
 }
 
 footer {

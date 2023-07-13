@@ -44,8 +44,8 @@ function getTeamAsHTML(team) {
     <td>${team.name}</td>
     <td>${team.url}</td>
     <td>
-    <button data-id="${team.id}" class="action-btn edit-btn"> &#9998; </button>
-    <button data-id="${team.id}" class="action-btn delete-btn"> ✖ </button>
+    <button title="Edit" data-id="${team.id}" class="action-btn edit-btn"> &#9998; </button>
+    <button title="Delete" data-id="${team.id}" class="action-btn delete-btn"> ✖ </button>
     </td>
   </tr>`;
 }
@@ -65,8 +65,8 @@ function getTeamAsHTMLInputs(team) {
       <input value="${team.url}" type="text" name="url" placeholder="Enter Project URL" />
     </td>
     <td>
-      <button class="action-btn" title="Save" type="submit">💾</button>
-      <button class="action-btn" title="Cancel" type="reset">❌</button>
+      <button type="submit" class="action-btn" title="Save">💾</button>
+      <button type="reset" class="action-btn" title="Cancel">❌</button>
     </td>
   </tr>`;
 }
