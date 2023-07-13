@@ -38,14 +38,18 @@ function updateTeamRequest(team) {
 }
 
 function getTeamAsHTML(team) {
+  const displayUrl = team.url.startsWith("https://github.com/") ? team.url.substring(19) : team.url;
   return `<tr>
     <td>${team.promotion}</td>
     <td>${team.members}</td>
     <td>${team.name}</td>
-    <td>${team.url}</td>
     <td>
-    <button title="Edit" data-id="${team.id}" class="action-btn edit-btn"> &#9998; </button>
-    <button title="Delete" data-id="${team.id}" class="action-btn delete-btn"> ✖ </button>
+    <a href="${team.url}" target='_blank'>${displayUrl}</a>
+    </td>
+
+    <td>
+    <button type="button" title="Edit" data-id="${team.id}" class="action-btn edit-btn"> &#9998; </button>
+    <button type="button" title="Delete" data-id="${team.id}" class="action-btn delete-btn"> ✖ </button>
     </td>
   </tr>`;
 }
