@@ -83,7 +83,15 @@ function getTeamAsHTMLInputs(team) {
   </tr>`;
 }
 
+let previewTeams = [];
+
 function renderTeams(teams, editID) {
+  if (teams === previewTeams) {
+    console.warn("same teams already rendered");
+    return;
+  }
+  previewTeams = teams;
+
   const htmlTeams = teams.map(team => {
     return team.id === editID ? getTeamAsHTMLInputs(team) : getTeamAsHTML(team);
   });
@@ -152,7 +160,7 @@ function onSubmit(e) {
         // window.location.reload();
         // loadTeams();
         team.id = status.id;
-        allTeams.push(team);
+        allTeams = [...allTeams, team];
         renderTeams(allTeams);
         $("#teamsForm").reset();
       }
