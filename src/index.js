@@ -150,7 +150,10 @@ function onSubmit(e) {
       console.warn("created", status);
       if (status.success) {
         // window.location.reload();
-        loadTeams();
+        // loadTeams();
+        team.id = status.id;
+        allTeams.push(team);
+        renderTeams(allTeams);
         $("#teamsForm").reset();
       }
     });
@@ -162,6 +165,7 @@ function startEdit(id) {
   console.warn("edit... %o", id);
   // const team = allTeams.find(team => team.id === id);
   renderTeams(allTeams, id);
+  console.info(allTeams);
   setInputsDisabled(true);
 }
 
