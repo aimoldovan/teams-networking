@@ -86,7 +86,7 @@ function getTeamAsHTMLInputs(team) {
 let previewTeams = [];
 
 function renderTeams(teams, editID) {
-  if (teams === previewTeams) {
+  if (!editID && teams === previewTeams) {
     console.warn("same teams already rendered");
     return;
   }
@@ -209,6 +209,7 @@ function initEvents() {
     console.info("reset", editID);
     if (editID) {
       // console.warn("cancel edit");
+      allTeams = [...allTeams];
       renderTeams(allTeams);
       setInputsDisabled(false);
       editID = "";
