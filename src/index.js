@@ -86,10 +86,25 @@ function getTeamAsHTMLInputs(team) {
 let previewTeams = [];
 
 function renderTeams(teams, editID) {
+  console.time("check");
   if (!editID && teams === previewTeams) {
-    console.warn("same teams already rendered");
+    // console.warn("same teams already rendered");
+    console.timeEnd("check");
+
     return;
   }
+  if (!editID && teams.length === previewTeams.length) {
+    const sameContent = previewTeams.every((team, i) => team === teams[i]);
+    if (sameContent) {
+      // console.info("sameContent");
+      console.timeEnd("check");
+
+      return;
+    }
+  }
+  console.timeEnd("check");
+
+  console.time("render");
   previewTeams = teams;
 
   const htmlTeams = teams.map(team => {
@@ -98,6 +113,7 @@ function renderTeams(teams, editID) {
   //   console.warn(htmlTeams);
   $("#teamsTable tbody").innerHTML = htmlTeams.join("");
   addTitlesToOverflowCells();
+  console.timeEnd("render");
 }
 
 function addTitlesToOverflowCells() {
@@ -151,9 +167,15 @@ function onSubmit(e) {
     updateTeamRequest(team).then(status => {
       console.warn("updated", status);
       if (status.success) {
-        // window.location.reload();
-        loadTeams();
-        // $("#teamsForm").reset();
+        // loadTeams();
+        allTeams = allTeams.map(t => {
+          console.info(t.id === team.id, t.promotion);
+          if (t.id === team.id) {
+            return team;
+          }
+          return t;
+        });
+        renderTeams(allTeams);
         setInputsDisabled(false);
         editID = "";
       }
