@@ -206,8 +206,10 @@ function initEvents() {
     if (e.target.matches("button.delete-btn")) {
       const id = e.target.dataset.id;
       // console.warn("delete... %o", id);
+      mask($("#teamsForm"));
       deleteTeamRequest(id, status => {
         console.info("delete callback %o", status);
+        unmask($("#teamsForm"));
         if (status.success) {
           // window.location.reload();
           loadTeams();
