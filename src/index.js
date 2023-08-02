@@ -133,7 +133,7 @@ function loadTeams() {
     url = "data/teams.json";
     console.info("displaying mock data %o", url);
   }
-  fetch(url)
+  return fetch(url)
     .then(r => r.json())
     .then(teams => {
       allTeams = teams;
@@ -266,7 +266,10 @@ function initEvents() {
   });
 }
 
-loadTeams();
+$("#teamsForm").classList.add("loading-mask");
+loadTeams().then(() => {
+  $("#teamsForm").classList.remove("loading-mask");
+});
 initEvents();
 
 function sleep(ms) {
@@ -277,10 +280,8 @@ function sleep(ms) {
   });
 }
 
-$("#teamsForm").classList.add("loading-mask");
 sleep(5000).then(() => {
   console.warn("ready");
-  $("#teamsForm").classList.remove("loading-mask");
 });
 // const s = sleep(4000);
 // console.info("s", s);
