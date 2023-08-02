@@ -171,7 +171,10 @@ function onSubmit(e) {
         allTeams = allTeams.map(t => {
           console.info(t.id === team.id, t.promotion);
           if (t.id === team.id) {
-            return team;
+            return {
+              ...t,
+              ...team
+            };
           }
           return t;
         });
