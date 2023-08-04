@@ -110,7 +110,7 @@ function getTeamValues(parent) {
   return team;
 }
 
-function onSubmit(e) {
+async function onSubmit(e) {
   //   console.warn("submit", e);
   e.preventDefault();
 
@@ -125,25 +125,25 @@ function onSubmit(e) {
   if (editID) {
     team.id = editID;
     console.warn("update...", team);
-    updateTeamRequest(team).then(({ success }) => {
-      if (success) {
-        // loadTeams();
-        allTeams = allTeams.map(t => {
-          console.info(t.id === team.id, t.promotion);
-          if (t.id === team.id) {
-            return {
-              ...t,
-              ...team
-            };
-          }
-          return t;
-        });
-        renderTeams(allTeams);
-        setInputsDisabled(false);
-        editID = "";
-      }
-      unmask(form);
-    });
+
+    const { success } = await updateTeamRequest(team);
+    if (success) {
+      // loadTeams();
+      allTeams = allTeams.map(t => {
+        console.info(t.id === team.id, t.promotion);
+        if (t.id === team.id) {
+          return {
+            ...t,
+            ...team
+          };
+        }
+        return t;
+      });
+      renderTeams(allTeams);
+      setInputsDisabled(false);
+      editID = "";
+    }
+    unmask(form);
   } else {
     createTeamRequest(team).then(({ success, id }) => {
       if (success) {
