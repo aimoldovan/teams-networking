@@ -2,6 +2,8 @@ import "./style.css";
 import { $, sleep, mask, unmask } from "./utilities";
 import { loadTeamsRequest, createTeamRequest, deleteTeamRequest, updateTeamRequest } from "./middleware";
 
+const form = "#teamsForm";
+
 let allTeams = [];
 let editID;
 
@@ -15,12 +17,11 @@ function getTeamAsHTML(team) {
     <td>${team.members}</td>
     <td>${team.name}</td>
     <td>
-    <a href="${team.url}" target='_blank'>${displayUrl}</a>
+      <a href="${team.url}" target='_blank'>${displayUrl}</a>
     </td>
-
     <td>
-    <button type="button" title="Edit" data-id="${id}" class="action-btn edit-btn"> &#9998; </button>
-    <button type="button" title="Delete" data-id="${id}" class="action-btn delete-btn"> ✖ </button>
+      <button type="button" title="Edit" data-id="${id}" class="action-btn edit-btn"> &#9998; </button>
+      <button type="button" title="Delete" data-id="${id}" class="action-btn delete-btn"> ✖ </button>
     </td>
   </tr>`;
 }
@@ -30,14 +31,14 @@ function getTeamAsHTMLInputs({ promotion, members, name, url }) {
   return `<tr>
     <td>
       <input value="${promotion}" type="text" name="promotion" placeholder="Enter Promotion" />
-    </td
-    <td
+    </td>
+    <td>
       <input value="${members}" type="text" name="members" placeholder="Enter Members" />
-    </td
-    <td
+    </td>
+    <td>
       <input value="${name}" type="text" name="name" placeholder="Enter Project Name" />
-    </td
-    <td
+    </td>
+    <td>
       <input value="${url}" type="text" name="url" placeholder="Enter Project URL" />
     </td>
     <td>
@@ -88,11 +89,11 @@ function addTitlesToOverflowCells() {
 }
 
 async function loadTeams() {
-  mask("#teamsForm");
+  mask(form);
   const teams = await loadTeamsRequest();
   allTeams = teams;
   renderTeams(teams);
-  unmask("#teamsForm");
+  unmask(form);
 }
 
 function getTeamValues(parent) {
@@ -119,6 +120,8 @@ function onSubmit(e) {
 
   console.warn(team);
 
+  mask(form);
+
   if (editID) {
     team.id = editID;
     console.warn("update...", team);
@@ -139,6 +142,7 @@ function onSubmit(e) {
         setInputsDisabled(false);
         editID = "";
       }
+      unmask(form);
     });
   } else {
     createTeamRequest(team).then(({ success, id }) => {
@@ -148,8 +152,9 @@ function onSubmit(e) {
         team.id = id;
         allTeams = [...allTeams, team];
         renderTeams(allTeams);
-        $("#teamsForm").reset();
+        $(form).reset();
       }
+      unmask(form);
     });
   }
 }
@@ -190,8 +195,8 @@ function initEvents() {
     renderTeams(teams);
   });
 
-  $("#teamsForm").addEventListener("submit", onSubmit);
-  $("#teamsForm").addEventListener("reset", e => {
+  $(form).addEventListener("submit", onSubmit);
+  $(form).addEventListener("reset", e => {
     console.info("reset", editID);
     if (editID) {
       // console.warn("cancel edit");
@@ -206,10 +211,10 @@ function initEvents() {
     if (e.target.matches("button.delete-btn")) {
       const id = e.target.dataset.id;
       // console.warn("delete... %o", id);
-      mask("#teamsForm");
+      mask(form);
       deleteTeamRequest(id, status => {
         console.info("delete callback %o", status);
-        unmask("#teamsForm");
+        unmask(form);
         if (status.success) {
           // window.location.reload();
           loadTeams();
