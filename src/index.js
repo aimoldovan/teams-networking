@@ -139,11 +139,9 @@ async function onSubmit(e) {
         }
         return t;
       });
-      renderTeams(allTeams);
       setInputsDisabled(false);
       editID = "";
     }
-    unmask(form);
   } else {
     const { success, id } = await createTeamRequest(team);
     if (success) {
@@ -151,11 +149,11 @@ async function onSubmit(e) {
       // loadTeams();
       team.id = id;
       allTeams = [...allTeams, team];
-      renderTeams(allTeams);
       $(form).reset();
     }
-    unmask(form);
   }
+  renderTeams(allTeams);
+  unmask(form);
 }
 
 function startEdit(id) {
@@ -168,7 +166,7 @@ function startEdit(id) {
 }
 
 function setInputsDisabled(disabled) {
-  document.querySelectorAll("tfoot input").forEach(input => {
+  document.querySelectorAll("tfoot input, tfoot button").forEach(input => {
     input.disabled = disabled;
   });
 }
