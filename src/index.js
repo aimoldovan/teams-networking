@@ -61,7 +61,7 @@ function renderTeams(teams, editID) {
   if (!editID && teams.length === previewTeams.length) {
     const sameContent = previewTeams.every((team, i) => team === teams[i]);
     if (sameContent) {
-      // console.info("sameContent");
+      console.info("sameContent");
       console.timeEnd("check");
 
       return;
@@ -198,7 +198,7 @@ function initEvents() {
     if (editID) {
       // console.warn("cancel edit");
       allTeams = [...allTeams];
-      renderTeams(allTeams);
+      renderTeams(allTeams, -1); // use 1- to force render
       setInputsDisabled(false);
       editID = "";
     }
