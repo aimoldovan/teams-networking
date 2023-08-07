@@ -198,6 +198,13 @@ function initEvents() {
     renderTeams(teams);
   });
 
+  $("#selectAll").addEventListener("input", e => {
+    console.info("check all boxes");
+    document.querySelectorAll("input[name=selectAll]").forEach(input => {
+      input.checked = e.target.checked;
+    });
+  });
+
   $(form).addEventListener("submit", onSubmit);
   $(form).addEventListener("reset", e => {
     console.info("reset", editID);
