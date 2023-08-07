@@ -190,7 +190,16 @@ function filterElements(teams, search) {
   });
 }
 
+function removeSelected() {
+  const selected = document.querySelectorAll("input[name=selectAll]:checked");
+  console.info("removeSelected", selected, selected[0].value);
+  const ids = [...selected].map(input => input.value);
+  console.warn("ids", ids);
+}
+
 function initEvents() {
+  $("#removeSelected").addEventListener("click", removeSelected);
+
   $("#search").addEventListener("input", e => {
     const search = e.target.value;
     const teams = filterElements(allTeams, search);
