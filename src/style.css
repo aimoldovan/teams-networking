@@ -84,6 +84,10 @@ td {
   width: 85px;
 }
 
+.select-all-col {
+  width: 40px;
+}
+
 .action-btn {
   min-width: 35px;
   cursor: pointer;
