@@ -239,9 +239,12 @@ function initEvents() {
       const status = await deleteTeamRequest(id);
       console.info("delete callback %o", status);
       if (status.success) {
-        // window.location.reload();
-        loadTeams();
+        // window.location.reload(); ---v1
+        // loadTeams(); ---v2
+        allTeams = allTeams.filter(team => team.id !== id);
       }
+      renderTeams(allTeams);
+      unmask(form);
     } else if (e.target.matches("button.edit-btn")) {
       const id = e.target.dataset.id;
       startEdit(id);
