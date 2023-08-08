@@ -1,6 +1,8 @@
 import "./style.css";
 import { $, sleep, mask, unmask } from "./utilities";
 import { loadTeamsRequest, createTeamRequest, deleteTeamRequest, updateTeamRequest } from "./middleware";
+// import { debounce } from "lodash"; //--- not ok - it is importing all functions
+import debounce from "lodash/debounce";
 
 const form = "#teamsForm";
 
@@ -179,7 +181,7 @@ function setInputsDisabled(disabled) {
 
 function filterElements(teams, search) {
   search = search.toLowerCase();
-  return teams.filter((promotion, members, name, url) => {
+  return teams.filter(({ promotion, members, name, url }) => {
     // console.info("search %o in %o", search, team.promotion);
     return (
       promotion.toLowerCase().includes(search) ||
@@ -205,12 +207,15 @@ async function removeSelected() {
 function initEvents() {
   $("#removeSelected").addEventListener("click", removeSelected);
 
-  $("#search").addEventListener("input", e => {
-    const search = e.target.value;
-    const teams = filterElements(allTeams, search);
-    // console.info("search", search, teams, allTeams);
-    renderTeams(teams);
-  });
+  $("#search").addEventListener(
+    "input",
+    debounce(e => {
+      const search = e.target.value;
+      const teams = filterElements(allTeams, search);
+      // console.info("search", search, teams, allTeams);
+      renderTeams(teams);
+    }, 1000)
+  );
 
   $("#selectAll").addEventListener("input", e => {
     console.info("check all boxes");
