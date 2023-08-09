@@ -201,7 +201,7 @@ async function removeSelected() {
   const responses = await Promise.allSettled(promises);
   // console.warn("responses", responses);
   unmask("#main");
-  loadTeams();
+  await loadTeams();
 }
 
 function initEvents() {
